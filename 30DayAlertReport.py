@@ -14,9 +14,9 @@ import urllib.request
 import getpass
 
 #Account Info - uses an API user with manage access to reports and view access to all resources. Creds hard-coded so it can be used in automated jobs.
-AccessId = "VV9Uf6742JRv49I8w4J6"
-AccessKey = "X59SQT-6y5c%n2hgnMk%-=4Ya[Jbv5}rKz39GU26"
-Company = 'haservices'
+AccessId = getpass.getpass(prompt='Enter the Access ID of the LM user: ')
+AccessKey = getpass.getpass(prompt='Enter the Access Key of the LM user: ')
+Company = getpass.getpass(prompt='Enter the comapany name in LM: example is haservices) ')
 numDaysAlerts = getpass.getpass(prompt='Enter the number of days you want alerts for. Max 30: ')
 
 
