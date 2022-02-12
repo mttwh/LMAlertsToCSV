@@ -1,6 +1,5 @@
 #!/bin/env python
-#This script will pull all alerts triggered over the past 30 days. 
-#30 reports will be generated, run, parsed, and destroyed to get this info each time script runs
+#This script will pull all alerts triggered in the past X amount of days and write to a CSV
 
 import requests
 import json
@@ -16,14 +15,14 @@ import getpass
 #Account Info - uses an API user with manage access to reports and view access to all resources. Creds hard-coded so it can be used in automated jobs.
 AccessId = getpass.getpass(prompt='Enter the Access ID of the LM user: ')
 AccessKey = getpass.getpass(prompt='Enter the Access Key of the LM user: ')
-Company = getpass.getpass(prompt='Enter the comapany name in LM: example is haservices) ')
-numDaysAlerts = getpass.getpass(prompt='Enter the number of days you want alerts for. Max 30: ')
+Company = input("Enter the comapany name in LM (example is haservices): ")
+numDaysAlerts = input("Enter the number of days you want alerts for. Max 30: ")
 
 
 #initialize variables
 dayCounter = 1
 #lowerBoundValue needs to be edited if you want to adjust the length that this will go back (30 days, 7 days, etc.)
-lowerBoundValue = 7
+lowerBoundValue = int(numDaysAlerts)
 dayDecrementer = 1
 upperBoundValue = lowerBoundValue - dayDecrementer
 lowerBoundDate = datetime.now() - timedelta(lowerBoundValue)
@@ -136,7 +135,7 @@ for reportId in reportIdList:
 
 #define values for CSV file
 csv_columns = ["Severity", "Device", "Datasource", "Instance", "Datapoint", "Began", "Client Code", "Group"]
-csv_filename = "alertListv3.csv"
+csv_filename = "alertList.csv"
 csvList = []
 for alertEntry in masterList:
     severity = alertEntry[0].strip('"')
